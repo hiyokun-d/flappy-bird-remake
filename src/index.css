@@ -1,4 +1,92 @@
+@import url('https://fonts.googleapis.com/css2? family= VT323 & display=swap');
+
 body {
   margin: 0;
   overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+canvas {
+  border: 4px solid rgb(90, 90, 165);
+  border-radius: 10px;
+  box-shadow: 0 0 10px #000;
+  background: 5px 5px 10px rgb(243, 0, 0);
+}
+
+#score {
+  position: absolute;
+  top: 50px;
+  font-size: 50px;
+  color: rgb(90, 90, 165);
+  font-family: 'VT323', monospace;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+}
+
+#restart {
+  position: absolute;
+  font-size: 0px;
+  color: rgb(68, 68, 68);
+  font-family: 'VT323', monospace;
+  
+  display: flex;
+  top: 500px;
+  flex-direction: column;
+  align-items: center;
+  
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+  animation: scaleUp 0.5s ease-in forwards;
+  
+  /* change button color */
+  background: rgb(170, 168, 168);
+  border: 4px solid rgb(110, 110, 110);
+  border-radius: 10px;
+  box-shadow: 0 0 10px #000;
+  justify-content: center;
+
+  /* hide this element */
+  opacity: 0;
+}
+
+#restart:hover {
+  transition: background 1s ease-in, color 0.3s ease-in, border 0.5s ease-in;
+  background: rgb(71, 71, 71);
+  color: rgb(255, 255, 255);
+  border: 4px solid rgb(255, 255, 255);
+}
+
+@keyframes scaleUp {
+  0% {
+    font-size: 0;
+  }
+  100% {
+    font-size: 50px;
+  } 
+}
+
+#footers {
+ position: absolute;
+  bottom: 0;
+
+    -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }

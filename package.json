@@ -1,6 +1,6 @@
 {
-  "name": "snakes",
-  "productName": "snakes",
+  "name": "flappy bird",
+  "productName": "flappy bird",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "src/index.js",
@@ -23,7 +23,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "snakes"
+            "name": "flappy-bird"
           }
         },
         {

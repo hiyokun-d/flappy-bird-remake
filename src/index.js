@@ -11,7 +11,7 @@ const createWindow = () => {
 	// Create the browser window.
 	const mainWindow = new BrowserWindow({
 		width: 800,
-		height: 600,
+		height: 800,
 		autoHideMenuBar: true,
 		simpleFullscreen: true,
 		skipTaskbar: true,
@@ -27,7 +27,6 @@ const createWindow = () => {
 		modal: true,
 		resizable: true,
 		roundedCorners: true,
-		titleBarOverlay: true,
 		titleBarStyle: "customButtonsOnHover",
 		frame: false,
 		disableAutoHideCursor: false,
