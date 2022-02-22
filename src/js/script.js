@@ -3,6 +3,10 @@ const ctx = canvas.getContext("2d");
 const scoreText = document.getElementById("score");
 const restartButton = document.getElementById("restart");
 
+		// take a sound from src/sound
+		let sound = new Audio();
+		sound.src = "sound/y2mate.com - EMOTIONAL DAMAGE SFX.mp3"
+
 let cw = 480;
 let ch = window.innerHeight - 10;
 
@@ -88,6 +92,8 @@ bird.src = "img/bird.png"
 
 let opacity = 0;
 let pipes = [];
+
+let soundLooping = 1
 function spawnPipe() {
 	setInterval(() => {
 		if (birdComponents.gameStart) {
@@ -119,8 +125,9 @@ function spawnPipe() {
 
 			pipes.push(pipeComponent);
 		}
-		}, 1500);
+	}, 1500);
 }
+
 function game() {
 	ctx.drawImage(backgroundImage, 0, 0, cw, ch);
 	// draw the bird
@@ -156,6 +163,11 @@ function game() {
 		scoreText.style.color = "linear-gradient( #3d3d3d, #63b2)";
 		restartButton.style.transform = "translateY(0px) translateX(0%)";
 
+		if (soundLooping == 1) {
+			soundLooping = 0;
+			sound.play();
+		}
+		
 		setTimeout(() => {
 			scoreText.innerText = `Score: ${birdComponents.score}`;
 			scoreText.style.color = "lightGray";
@@ -180,11 +192,11 @@ canvas.addEventListener("click", () => {
 		birdComponents.flap();
 })
 
-
 spawnPipe()
 setInterval(game, 1000 / 60);
 
 restartButton.addEventListener("click", () => {
+	soundLooping = 1;
 	restartButton.style.transition = "transform 1s";
 	restartButton.style.transform = "translateY(350px)";
 	restartButton.style.opacity = 0;
