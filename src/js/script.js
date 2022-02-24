@@ -92,12 +92,13 @@ bird.src = "img/bird.png"
 
 let opacity = 0;
 let pipes = [];
+let pipesBottom = [];
 
 let soundLooping = 1
 function spawnPipe() {
 	setInterval(() => {
 		if (birdComponents.gameStart) {
-			let pipeComponent = {
+			let pipeComponentTop = {
 				x: canvas.width,
 				y: 0,
 				width: 50,
@@ -105,7 +106,6 @@ function spawnPipe() {
 				velocity: -3,
 				draw: function () {
 					ctx.drawImage(pipe, this.x, this.y, this.width, this.height);
-					ctx.drawImage(pipe, this.x, this.y + this.height + 300, this.width, ch - this.height - 100);
 				},
 				update: function () {
 					this.x += this.velocity;
@@ -113,7 +113,7 @@ function spawnPipe() {
 					if (this.x + this.width < 0) {
 						setTimeout(() => {
 							pipes.shift();
-							birdComponents.score++;
+							birdComponents.score+=1
 						}, 0);
 					}
 
@@ -123,7 +123,36 @@ function spawnPipe() {
 				}
 			};
 
-			pipes.push(pipeComponent);
+			pipes.push(pipeComponentTop);
+
+			let pipeComponentBottom = {
+				x: canvas.width,
+				y: pipeComponentTop.height + ch / 2,
+				width: 50,
+				height: ch - 500 + pipeComponentTop.height + 60 - ch / 2  + 5000,
+				velocity: -3,
+				draw: function () {
+					ctx.drawImage(pipe, this.x, this.y, this.width, this.height);
+				},
+				update: function () {
+					this.x += this.velocity;
+
+					if (this.x + this.width < 0) {
+						setTimeout(() => {
+							pipesBottom.shift();
+						}, 0);
+					}
+					
+
+					if (birdComponents.gameOver) {
+						this.velocity = 0;
+					}
+				}
+			};
+
+
+			pipesBottom.push(pipeComponentBottom);
+			console.log(pipesBottom);
 		}
 	}, 1500);
 }
@@ -141,8 +170,28 @@ function game() {
 			// check for collision
 			if (birdComponents.gameStart && !birdComponents.gameOver) {
 				if(!birdComponents.immortal) {
-					if (birdComponents.x + birdComponents.width / 2 > pipe.x && birdComponents.x - birdComponents.width / 2 < pipe.x + pipe.width) {
-						if (birdComponents.y + birdComponents.height / 2 > pipe.y && birdComponents.y - birdComponents.height / 2 < pipe.y + pipe.height) {
+					if (birdComponents.x + birdComponents.width / 3 > pipe.x && birdComponents.x - birdComponents.width / 4 < pipe.x + pipe.width) {
+						if (birdComponents.y + birdComponents.height / 3 > pipe.y && birdComponents.y - birdComponents.height / 3 < pipe.y + pipe.height) {
+							birdComponents.gameOver = true;
+							if (birdComponents.rotation <= 0) {
+								birdComponents.rotation = -5;
+							}
+						}
+					}
+
+				}
+			}
+		});
+	
+		pipesBottom.forEach((pipeBottom) => {
+			pipeBottom.draw();
+			pipeBottom.update();
+
+			// check for collision
+			if (birdComponents.gameStart && !birdComponents.gameOver) {
+				if (!birdComponents.immortal) {
+					if (birdComponents.x + birdComponents.width / 3 > pipeBottom.x && birdComponents.x - birdComponents.width / 3 < pipeBottom.x + pipeBottom.width) {
+						if (birdComponents.y + birdComponents.height / 3 > pipeBottom.y && birdComponents.y - birdComponents.height / 3 < pipeBottom.y + pipeBottom.height) {
 							birdComponents.gameOver = true;
 							if (birdComponents.rotation <= 0) {
 								birdComponents.rotation = -5;
@@ -151,7 +200,8 @@ function game() {
 					}
 				}
 			}
-		});
+		})
+	
 
 	ctx.fillStyle = `RGBA(165, 165, 238, ${opacity})`;
 	ctx.fillRect(0, 0, cw, ch);
@@ -218,4 +268,5 @@ restartButton.addEventListener("click", () => {
 	birdComponents.rotation = 0;
 
 	pipes = [];
+	pipesBottom = [];
 })
