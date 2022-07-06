@@ -1,3 +1,3 @@
 # flappy bird
 
-    :::image type="content" source="img.png" alt-text="PRRRRRRRR":::
+<img src="img.png" alt="THIS IMAGE GOING PRRRT">
